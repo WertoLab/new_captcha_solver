@@ -51,7 +51,7 @@ LOCAL_REQUEST_PATH = "http://localhost:8000/get_captchas"
 # print(data)
 headers = {"Content-type": "application/json", "Accept": "text/plain"}
 #print(data)
-response = r.post(LOCAL_REQUEST_PATH, data=data, headers=headers)
+response = r.post(REQUEST_PATH, data=data, headers=headers)
 coord_str = response.content.decode("UTF-8")
 # result_path = "/Users/andrey/Desktop/ dataset/159.jpg"
 # copy = cv2.imread("/Users/andrey/Desktop/ dataset/69.jpg")
