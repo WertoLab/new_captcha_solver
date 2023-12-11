@@ -40,7 +40,7 @@ file_business = {
     # "body": "1111111111111111111",
     "imginstructions": b64_string_icons,
     "textinstructions": "Кликните в таком порядке | Click in the following order",
-    "json1": 1,
+    "json": 1,
     "sobel_filter": 70,
 }
 data = json.dumps(file_business)

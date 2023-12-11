@@ -2,7 +2,6 @@ from ultralytics import YOLO
 from captcha_resolver.yolov8 import YOLOv8
 from captcha_resolver.AI_models.ClassificationModel import AlexNet
 import torch
-from torchvision import transforms
 
 
 def init_models():
@@ -18,6 +17,8 @@ def init_models():
             map_location="cpu",
         )
     )
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print(device)
     alexnet.eval()
 
     print("Models are initialized")
