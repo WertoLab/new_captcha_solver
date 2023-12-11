@@ -10,6 +10,7 @@ class RequestModel(BaseModel):
     body: str
     imginstructions: str
     textinstructions: str
+    sobel_filter: int
 
 
 
