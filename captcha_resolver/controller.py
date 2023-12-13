@@ -5,7 +5,9 @@ from fastapi import Request
 import json
 from captcha_resolver.models.capcha import *
 from fastapi import Response
-
+import time
+from captcha_resolver.init import instance_id
+import time
 
 def init_routes(app, service):
 
@@ -15,15 +17,32 @@ def init_routes(app, service):
 
     @app.post("/get_captchas1")
     async def get_solve_torch(request: RequestModel):
+        start = time.time()
         sequence, error = service.get_captcha_solve_sequence_hybrid_merge_business(
             request=request)
+        end = time.time()
+        try:
+            with open('captcha_resolver/logs/' + str(instance_id) + '.txt', 'a') as f:
+                f.write('\n')
+                f.write('Time_taken: '+str(end-start))
+        except Exception as e:
+            print(e)
+
         if error:
             return Response(content=json.dumps({"status": 0, "request": "ERROR_CAPTCHA_UNSOLVABLE"}), media_type="application/json")
         return Response(content=json.dumps({"status": 1, "request": sequence}), media_type="application/json")
 
     @app.post("/get_captchas")
     async def get_solve_onnx(request: RequestModel):
+        start = time.time()
         sequence, error = service.get_onnx_solver(request)
+        end = time.time()
+        try:
+            with open('captcha_resolver/logs/' + str(instance_id) + '.txt', 'a') as f:
+                f.write('\n')
+                f.write('Time_taken: ' + str(end - start))
+        except Exception as e:
+            print(e)
         if error:
             return Response(content=json.dumps({"status": 0, "request": "ERROR_CAPTCHA_UNSOLVABLE"}),
                             media_type="application/json")

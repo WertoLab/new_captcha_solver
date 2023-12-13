@@ -1,10 +1,19 @@
+import os
+
 from ultralytics import YOLO
 from captcha_resolver.yolov8 import YOLOv8
 from captcha_resolver.AI_models.ClassificationModel import AlexNet
 import torch
+import uuid
+
+instance_id: str = str(os.getpid())
 
 
 def init_models():
+
+    with open('captcha_resolver/logs/' + str(instance_id) + '.txt', 'w') as f:
+        f.write('Instance with id: ' + str(instance_id) + ' has launched')
+
     print("Models initialization ...")
     segmentation_model = YOLO("captcha_resolver/AI_weights/captcha_segmentation_v2.pt")
     detection_model = YOLO("captcha_resolver/AI_weights/best_v3.pt")
