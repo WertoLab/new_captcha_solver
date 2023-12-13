@@ -78,35 +78,3 @@ def xywh2xyxy(x):
     y[..., 3] = x[..., 1] + x[..., 3] / 2
     return y
 
-
-def draw_detections(image, boxes, scores, class_ids, mask_alpha=0.3):
-    det_img = image.copy()
-
-    img_height, img_width = image.shape[:2]
-    font_size = min([img_height, img_width]) * 0.0006
-    text_thickness = int(min([img_height, img_width]) * 0.001)
-
-    det_img = draw_masks(det_img, boxes, class_ids, mask_alpha)
-
-    # Draw bounding boxes and labels of detections
-    for class_id, box, score in zip(class_ids, boxes, scores):
-        color = colors[class_id]
-
-        label = class_names[class_id]
-        caption = f'{label} {int(score * 100)}%'
-    return det_img
-
-
-def draw_masks(image: np.ndarray, boxes: np.ndarray, classes: np.ndarray, mask_alpha: float = 0.3) -> np.ndarray:
-    mask_img = image.copy()
-
-    # Draw bounding boxes and labels of detections
-    for box, class_id in zip(boxes, classes):
-        color = colors[class_id]
-
-        x1, y1, x2, y2 = box.astype(int)
-
-        # Draw fill rectangle in mask image
-        cv2.rectangle(mask_img, (x1, y1), (x2, y2), color, -1)
-
-    return cv2.addWeighted(mask_img, mask_alpha, image, 1 - mask_alpha, 0)

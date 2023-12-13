@@ -11,7 +11,7 @@ instance_id: str = str(os.getpid())
 
 def init_models():
 
-    with open('captcha_resolver/logs/' + str(instance_id) + '.txt', 'w') as f:
+    with open('captcha_resolver/logs/' + str(instance_id) + '.txt', 'x') as f:
         f.write('Instance with id: ' + str(instance_id) + ' has launched')
 
     print("Models initialization ...")

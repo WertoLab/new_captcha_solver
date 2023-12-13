@@ -15,7 +15,7 @@ def init_routes(app, service):
     async def hello():
         return json.dumps({"hello": "world"})
 
-    @app.post("/get_captchas1")
+    @app.post("/get_captchas")
     async def get_solve_torch(request: RequestModel):
         start = time.time()
         sequence, error = service.get_captcha_solve_sequence_hybrid_merge_business(
@@ -32,7 +32,7 @@ def init_routes(app, service):
             return Response(content=json.dumps({"status": 0, "request": "ERROR_CAPTCHA_UNSOLVABLE"}), media_type="application/json")
         return Response(content=json.dumps({"status": 1, "request": sequence}), media_type="application/json")
 
-    @app.post("/get_captchas")
+    @app.post("/get_captchas1")
     async def get_solve_onnx(request: RequestModel):
         start = time.time()
         sequence, error = service.get_onnx_solver(request)
