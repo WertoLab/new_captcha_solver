@@ -92,19 +92,12 @@ def draw_detections(image, boxes, scores, class_ids, mask_alpha=0.3):
     for class_id, box, score in zip(class_ids, boxes, scores):
         color = colors[class_id]
 
-        draw_box(det_img, box, color)
-
         label = class_names[class_id]
         caption = f'{label} {int(score * 100)}%'
         draw_text(det_img, caption, box, color, font_size, text_thickness)
 
     return det_img
 
-
-def draw_box( image: np.ndarray, box: np.ndarray, color: tuple[int, int, int] = (0, 0, 255),
-             thickness: int = 2) -> np.ndarray:
-    x1, y1, x2, y2 = box.astype(int)
-    return cv2.rectangle(image, (x1, y1), (x2, y2), color, thickness)
 
 
 def draw_text(image: np.ndarray, text: str, box: np.ndarray, color: tuple[int, int, int] = (0, 0, 255),
