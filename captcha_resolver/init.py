@@ -4,7 +4,6 @@ from ultralytics import YOLO
 from captcha_resolver.yolov8 import YOLOv8
 from captcha_resolver.AI_models.ClassificationModel import AlexNet
 import torch
-import uuid
 
 instance_id: str = str(os.getpid())
 
