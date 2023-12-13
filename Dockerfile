@@ -10,4 +10,4 @@ COPY . /captcha_solver_app
 
 EXPOSE 8000
 
-CMD gunicorn app:app --workers=25 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout=600
+CMD gunicorn app:app --workers=8 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout=600 --reload
