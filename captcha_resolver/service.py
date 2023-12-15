@@ -1,3 +1,5 @@
+import uuid
+
 from captcha_preprocess.preprocess.preprocess import *
 import torch
 import numpy as np
@@ -9,6 +11,7 @@ from captcha_resolver.AI_models.ClassificationModel import AlexNet
 import captcha_resolver.CONSTS as CONSTS
 from captcha_resolver.models.capcha import *
 from torchvision import transforms
+from captcha_resolver.s3.s3_functions import *
 
 segmentation_model: YOLO
 detection_model: YOLO
@@ -61,7 +64,7 @@ class Service:
         detections = self.get_onnx_inference(captcha, icons, detection_onnx_model)
         segmentations = self.get_onnx_inference(captcha, icons, segmentation_onnx_model)
 
-        return self.merge(detections, segmentations)
+        return self.merge(detections, segmentations, data.body, data.imginstructions)
 
     def get_boxes(self, result):
         boxes = []
@@ -136,9 +139,9 @@ class Service:
 
         segment = self.get_captcha_solve_sequence_segmentation_sobel(captcha, icons)
 
-        return self.merge(sequence, segment)
+        return self.merge(sequence, segment, request.body, request.imginstructions)
 
-    def merge(self, sequence: [dict], segment: [dict]):
+    def merge(self, sequence: [dict], segment: [dict], captcha_base64, icons_base64):
 
         final_sequence = []
 
@@ -153,5 +156,11 @@ class Service:
         for i in range(len(final_sequence)):
             if final_sequence[i].get("x") is None:
                 error = True
+                object_id = str(uuid.uuid4())
+                put_object_to_s3("captchas_pairs/"+object_id+"/"+str(uuid.uuid4())+".txt", "captchas_pairs/"+object_id+"/"+str(uuid.uuid4())+".txt", captcha_base64, icons_base64)
+                break
 
         return final_sequence, error
+
+    def get_unresolved_captchas(self):
+        get_batch()

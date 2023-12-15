@@ -4,8 +4,8 @@ from pathlib import Path
 import requests as r
 
 ROOT_PATH = Path(__file__).resolve(strict=True).parent.parent.parent
-YPATHCAPTCHA="/Users/andrey/Downloads/sotka/image_004.png"#9
-YPATHICONS="/Users/andrey/Downloads/sotka/5004.png"
+YPATHCAPTCHA="/Users/andrey/Downloads/sotka/image_028.png"#9
+YPATHICONS="/Users/andrey/Downloads/sotka/5028.png"
 
 with open(str(YPATHCAPTCHA), "rb") as file:
     b64_string_captcha = base64.b64encode(file.read()).decode("UTF-8")

@@ -4,6 +4,7 @@ from ultralytics import YOLO
 from captcha_resolver.yolov8 import YOLOv8
 from captcha_resolver.AI_models.ClassificationModel import AlexNet
 import torch
+import boto3
 
 instance_id: str = str(os.getpid())
 
@@ -31,3 +32,15 @@ def init_models():
 
     print("Models are initialized")
     return segmentation_model, detection_model, segmentation_onnx_model, detection_onnx_model, alexnet
+
+
+def init_s3():
+    session = boto3.session.Session()
+    s3 = session.client(
+        service_name='s3',
+        endpoint_url='https://storage.yandexcloud.net',
+        aws_access_key_id='YCAJEPC30tPiNB3wctwCuqNhZ',
+        aws_secret_access_key='YCOCKWm4HIFDBMV4-jNTtTe20QQHAx42NPJkdkI8'
+    )
+
+    return s3
