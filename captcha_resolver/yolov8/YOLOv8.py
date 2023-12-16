@@ -20,7 +20,7 @@ class YOLOv8:
 
     def initialize_model(self, path):
         self.session = onnxruntime.InferenceSession(
-            path, providers=['CUDAExecutionProvider', 'CPUExecutionProvider']
+            path, providers=['CPUExecutionProvider']
 
         )
         # Get model info
