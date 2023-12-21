@@ -13,8 +13,9 @@ def get_batch():
     os.mkdir("download_captchas")
     counter = 0
     folder_id = ""
-    for key in s3.list_objects(Bucket='capchas-bucket')['Contents']:
+    for key in s3.list_objects_v2(Bucket='capchas-bucket')['Contents']:
         print(key['Key'])
+        print(counter)
         get_object_response = s3.get_object(Bucket='capchas-bucket', Key=key['Key'])
         if(counter % 2 == 0):
             folder_id = str(uuid.uuid4())
@@ -36,7 +37,9 @@ def put_object_to_s3(new_object_captcha, new_object_icons, content_captcha, cont
 
 
 def delete_captchas():
-    objects = s3.list_objects(Bucket='capchas-bucket', Prefix='captchas/')
-    for object in objects['Contents']:
+    counter = 0
+    for object in s3.list_objects(Bucket='capchas-bucket')['Contents']:
         s3.delete_object(Bucket='capchas-bucket', Key=object['Key'])
+        print(counter)
+        counter += 1
     return {"stutus": "deleted"}

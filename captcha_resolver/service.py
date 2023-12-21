@@ -156,11 +156,14 @@ class Service:
         for i in range(len(final_sequence)):
             if final_sequence[i].get("x") is None:
                 error = True
-                object_id = str(uuid.uuid4())
-                put_object_to_s3("captchas_pairs/"+object_id+"/"+str(uuid.uuid4())+".txt", "captchas_pairs/"+object_id+"/"+str(uuid.uuid4())+".txt", captcha_base64, icons_base64)
+                #object_id = str(uuid.uuid4())
+                #put_object_to_s3("captchas_pairs/"+object_id+"/"+str(uuid.uuid4())+".txt", "captchas_pairs/"+object_id+"/"+str(uuid.uuid4())+".txt", captcha_base64, icons_base64)
                 break
 
         return final_sequence, error
-
+#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
     def get_unresolved_captchas(self):
         get_batch()
+
+    def delete_unresolved_captchas(self):
+        delete_captchas()

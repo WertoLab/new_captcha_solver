@@ -56,3 +56,7 @@ def init_routes(app, service):
         service.get_unresolved_captchas()
         file_path = 'captchas.zip'
         return FileResponse(path=file_path, filename=file_path, media_type='text/mp4')
+
+    @app.get("/delete_unresolved_captchas")
+    async def delete_unresolved_captchas():
+        service.delete_unresolved_captchas()
